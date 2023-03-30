@@ -10,6 +10,8 @@ private:
 public:
     number (std::string name)
         : name_(name){};
+    number ()
+        : name_("empty"){};
     std::string get_number();
 };
 
@@ -35,7 +37,7 @@ public:
     country ()
       : name_("empty"){};
     operat *create_operat(std::string name);
-
+    void send(std::string adres, std::string messege);
 };
 
 
