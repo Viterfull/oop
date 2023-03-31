@@ -11,4 +11,5 @@ int main() {
     tele2->create_abonent(number("+79853722161"));
     a.send("+79853722161", "Hi!");
     a.send("+946685464637", "Hi2");
+    a.read("+79853722161");
 }
