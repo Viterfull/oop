@@ -1,9 +1,12 @@
 #include <string>
 #include <vector>
-#include <map>
+#include <memory>
+#include <unordered_map>
+
+class global_telephonia;
 
 class number{
-private:
+protected:
     std::string name_;
     std::vector <std::string> messeges_;
 public:
@@ -16,38 +19,57 @@ public:
     int print_mes();
 };
 
+class to_number: public number{
+    protected:
+        std::string name_to_;
+        global_telephonia *gl_; 
+    public:
+        to_number(std::string name, std::string name_to)
+            : number(name), name_to_(name_to){};
+        to_number ()
+            : number("empty"){};
+        void set_gl(global_telephonia *gl);
+        int save_mes(std::string messege);
+        std::string get_number_to();
+};
+
 class operat{
 private:
     std::string name_;
-    std::map <std::string, number> numbers_;
+    global_telephonia *gl_; 
+    std::unordered_map <std::string, number> numbers_;
+    std::unordered_map <std::string, to_number> to_numbers_;
 public:
-    operat (std::string name)
-        : name_(name){};
+    operat (std::string name, global_telephonia *gl)
+        : name_(name), gl_(gl){};
     operat ()
         : name_("empty"){};
     void create_abonent(number name);
-    int send(std::string adres, std::string messege);
-    int read(std::string adres);
+    void create_abonent(to_number a);
+    int send_to_nu(std::string adres, std::string messege);
+    int read_to_nu(std::string adres);
 };
+
 
 class country {
 private:
     std::string name_;
-    std::map <std::string, operat> operators_; 
+    global_telephonia *gl_; 
+    std::unordered_map  <std::string, operat> operators_; 
 public:
-    country (std::string name)
-      : name_(name){};
+    country (std::string name, global_telephonia *gl)
+      : name_(name), gl_(gl){};
     country ()
       : name_("empty"){};
     operat *create_operat(std::string name);
-    int send(std::string opp, std::string adres, std::string messege);
-    int read(std::string opp, std::string adres);
+    int send_to_opp(std::string opp, std::string adres, std::string messege);
+    int read_to_opp(std::string opp, std::string adres);
 };
 
 
 class global_telephonia {
 private:
-    std::map <std::string, country> countryes_;
+    std::unordered_map  <std::string, country> countryes_;
 
 
 public:
