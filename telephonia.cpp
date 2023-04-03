@@ -40,6 +40,7 @@ int operat::send_to_nu(std::string adres, std::string messege)
         return this->numbers_[adres].save_mes(messege);
     if (this->to_numbers_.contains(adres))
         return this->to_numbers_[adres].save_mes(messege);
+    std::cout << "не существует номера " << adres << "для отправки\n";
     return 3;
 }
 
@@ -49,6 +50,7 @@ int operat::read_to_nu(std::string adres)
         return this->numbers_[adres].print_mes();
     if (this->to_numbers_.contains(adres))
         return this->to_numbers_[adres].print_mes();
+    std::cout << "не существует номера " << adres << "для отправки\n";
     return 3;
 }
 
@@ -56,6 +58,7 @@ int country::send_to_opp(std::string opp, std::string adres, std::string messege
 {
     if (this->operators_.contains(opp))
         return this->operators_[opp].send_to_nu(adres, messege);
+    std::cout << "не существует оператора " << opp << "для отправки сообщения на" << adres << "\n";
     return 2;
 }
 
@@ -63,6 +66,8 @@ int country::read_to_opp(std::string opp, std::string adres)
 {
     if (this->operators_.contains(opp))
         return this->operators_[opp].read_to_nu(adres);
+    
+    std::cout << "не существует оператора " << opp << "для чтения сообщений на" << adres << "\n";
     return 2;
 }
 
@@ -86,7 +91,7 @@ int global_telephonia::send(std::string adres, std::string messege)
     // std::cout << "страна/оператор адресата " << countr << "\\" << opp <<"\n";
     if (this->countryes_.contains(countr))
         return this->countryes_[countr].send_to_opp(opp, adres, messege);
-    std::cout << "не существует номера " << adres << "для отправки\n";
+    std::cout << "не существует страны " << adres << "для отправки\n";
     return 1;
 }
 
@@ -97,7 +102,7 @@ int global_telephonia::read(std::string adres)
     // std::cout << "страна/оператор чтения " << countr << "\\" << opp <<"\n";
     if (this->countryes_.contains(countr))
         return this->countryes_[countr].read_to_opp(opp, adres);
-    std::cout << "не существует номера " << adres << "для чтения\n";
+    std::cout << "не существует страны " << adres << "для чтения\n";
     return 1;
 }
 
